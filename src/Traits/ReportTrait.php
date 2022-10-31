@@ -37,6 +37,17 @@ trait ReportTrait {
     }
 
     /**
+     * Returns the detailed time entries data in binary / pdf form
+     *
+     * @param   array       $data       Data payload that is to be sent with the request
+     * @return  stdClass
+     */
+    public function downloadDetailedPdf(array $data = array())
+    {
+        return $this->sendGetMessage($this->baseUrl . '/reports/api/v2/details.pdf', $data, false);
+    }
+
+    /**
      * Returns at-a glance information for a single project
      *
      * @param   array       $data       Data payload that is to be sent with the request

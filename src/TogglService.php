@@ -47,9 +47,10 @@ class TogglService {
      *
      * @param   string      $url        Url to which the request is to be sent
      * @param   array       $data       Data payload that is to be sent with the request
+     * @param $asJson
      * @return  stdClass
      */
-    protected function sendGetMessage($url, array $data = array())
+    protected function sendGetMessage($url, array $data = array(), $asJson = true)
     {
         return $this->prepareMessage( $url, $data )
             ->get();
@@ -98,12 +99,21 @@ class TogglService {
      *
      * @param   string      $url        Url to which the request is to be sent
      * @param   array       $data       Data payload that is to be sent with the request
+     * @param   $asJson
      * @return  Builder
      */
-    protected function prepareMessage($url, array $data = array())
+    protected function prepareMessage($url, array $data = array(), $asJson = true)
     {
         $data[ 'workspace_id' ] = $this->workspaceId;
         $data[ 'user_agent' ] = 'ixudra';
+
+        if($asJson) {
+            return $this->getCurlService()
+                ->to( $url )
+                ->withOption('USERPWD', $this->apiToken .':api_token')
+                ->withData( $data )
+                ->asJson();
+        }
 
         return $this->getCurlService()
             ->to( $url )
