@@ -52,7 +52,7 @@ class TogglService {
      */
     protected function sendGetMessage($url, array $data = array(), $asJson = true)
     {
-        return $this->prepareMessage( $url, $data )
+        return $this->prepareMessage( $url, $data, $asJson )
             ->get();
     }
 
@@ -118,8 +118,7 @@ class TogglService {
         return $this->getCurlService()
             ->to( $url )
             ->withOption('USERPWD', $this->apiToken .':api_token')
-            ->withData( $data )
-            ->asJson();
+            ->withData( $data );
     }
 
 
